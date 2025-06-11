@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+
+        <record id="letter_template_action" model="ir.actions.act_window">
+            <field name="name">Templates</field>
+            <field name="res_model">letter.template</field>
+            <field name="view_ids" eval="
+            [
+            (5,0,0),
+            (0,0,{'view_mode':'list','view_id':ref('letter_writer.letter_template_list_view')}),
+            (0,0,{'view_mode':'form','view_id':ref('letter_writer.letter_template_form_view')})
+            ]
+            "/>
+        </record>
+
+    </data>
+</odoo>

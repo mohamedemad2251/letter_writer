@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem name="Letter Writer" id="letter_writer_root">
+        <menuitem id="letter_writer_templates" name="Templates" action="letter_writer.letter_template_action" sequence="0"/>
+    </menuitem>
+</odoo>

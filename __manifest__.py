@@ -11,7 +11,7 @@
     """,
 
     'author': "Mohamed Emad",
-    'website': "https://www.github.com/mohamedemad2251/",
+    # 'website': "https://www.github.com/mohamedemad2251/",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
@@ -22,12 +22,16 @@
     # any module necessary for this one to work correctly
     'depends': ['base'],
 
+    'installable' : True,
+
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/views.xml',
+        'actions/actions.xml',
+        'views/menu_items.xml',
         'views/templates.xml',
-    ]
+    ],
     # only loaded in demonstration mode
     # 'demo': [
     #     'demo/demo.xml',

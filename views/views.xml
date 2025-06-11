@@ -1,60 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-  <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="letter_writer.list">
-      <field name="name">letter_writer list</field>
-      <field name="model">letter_writer.letter_writer</field>
-      <field name="arch" type="xml">
-        <list>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </list>
-      </field>
-    </record>
--->
 
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="letter_writer.action_window">
-      <field name="name">letter_writer window</field>
-      <field name="res_model">letter_writer.letter_writer</field>
-      <field name="view_mode">list,form</field>
-    </record>
--->
+  <record id="letter_template_list_view" model="ir.ui.view">
+    <field name="name">letter.template.list.view</field>
+    <field name="model">letter.template</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="template_name"/>
+        <field name="template_date"/>
+      </list>
+    </field>
+  </record>
 
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="letter_writer.action_server">
-      <field name="name">letter_writer server</field>
-      <field name="model_id" ref="model_letter_writer_letter_writer"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "list,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
+  <record id="letter_template_form_view" model="ir.ui.view">
+    <field name="name">letter.template.form.view</field>
+    <field name="model">letter.template</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <h1>
+            <field name="template_name"/>
+          </h1>
+          <group>
+            <group>
+              <field name="template_date"/>
+              <field name="template_content"/>
+            </group>
+            <group>
+              <field name="template_placeholders"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
 
-    <!-- Top menu item -->
-<!--
-    <menuitem name="letter_writer" id="letter_writer.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="letter_writer.menu_1" parent="letter_writer.menu_root"/>
-    <menuitem name="Menu 2" id="letter_writer.menu_2" parent="letter_writer.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="letter_writer.menu_1_list" parent="letter_writer.menu_1"
-              action="letter_writer.action_window"/>
-    <menuitem name="Server to list" id="letter_writer" parent="letter_writer.menu_2"
-              action="letter_writer.action_server"/>
--->
-  </data>
 </odoo>
