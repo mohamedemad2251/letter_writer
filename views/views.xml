@@ -24,11 +24,11 @@
           <group>
             <group>
               <field name="template_date"/>
-              <field name="template_content"/>
             </group>
             <group>
               <field name="template_placeholders"/>
             </group>
+            <field name="template_content" widget="html"/>
           </group>
         </sheet>
       </form>
