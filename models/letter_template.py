@@ -6,6 +6,7 @@ from odoo import api, fields, models
 class LetterTemplate(models.Model):
     _name = 'letter.template'
     _description = "Letter Templates Model"
+    _rec_name = 'template_name' #Your template name isn't called "name" so Odoo's ORM by default can't grab records/show their names. We need to represent records with a variable assigned.
 
     template_name = fields.Char(string="Template Name", required=True)
     template_date = fields.Date(string="Template Date", default=today())

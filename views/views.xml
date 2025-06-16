@@ -32,7 +32,10 @@
           <notebook>
             <page string="Editor">
               <group>
-                <field name="template_content" widget="html" string="Template Content" help="Edit your template using RichText (Word-like Editor). You can edit the alignment,
+                <field name="template_content"
+                 widget="html"
+                 style="border-style: solid; border-width: 1px; border-radius: 1px;"
+                 string="Template Content" help="Edit your template using RichText (Word-like Editor). You can edit the alignment,
                 font style, size, background/font color."/>
               </group>
             </page>
@@ -41,6 +44,7 @@
                 <field name="template_content"
                  widget="html"
                  string="Template Content - HTML"
+                 style="border-style: solid; border-width: 1px; border-radius: 5px;"
                  options="{'sandboxedPreview':true}"
                  help="Edit your template using HTML. You can paste your copied HTML+CSS design
                 here. Click on the code-looking button on the right to switch views."/>
@@ -51,6 +55,44 @@
             </page>
           </notebook>
 
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="letter_letter_list_view">
+    <field name="name">letter.letter.list.view</field>
+    <field name="model">letter.letter</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="letter_name"/>
+        <field name="template_id"/>
+      </list>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="letter_letter_form_view">
+    <field name="name">letter.letter.form.view</field>
+    <field name="model">letter.letter</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <h1>
+            <field name="letter_name"/>
+          </h1>
+          <group>
+            <group>
+              <field name="letter_date"/>
+            </group>
+            <group>
+              <field name="template_id"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Preview">
+              <field name="linked_content" widget="html"/>
+            </page>
+          </notebook>
         </sheet>
       </form>
     </field>

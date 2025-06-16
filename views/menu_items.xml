@@ -2,5 +2,6 @@
 <odoo>
     <menuitem name="Letter Writer" id="letter_writer_root">
         <menuitem id="letter_writer_templates" name="Templates" action="letter_writer.letter_template_action" sequence="0"/>
+        <menuitem id="letter_writer_letters" name="Letters" action="letter_writer.letter_letter_action" sequence="1"/>
     </menuitem>
 </odoo>
