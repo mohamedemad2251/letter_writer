@@ -6,7 +6,7 @@
     <field name="model">letter.template</field>
     <field name="arch" type="xml">
       <list>
-        <field name="template_name"/>
+        <field name="template_name" width="75vw"/>
         <field name="template_date"/>
       </list>
     </field>
@@ -26,10 +26,31 @@
               <field name="template_date"/>
             </group>
             <group>
-              <field name="template_placeholders"/>
+              <field name="template_placeholders" style="border-style: solid; border-width: 1px; border-radius: 5px;"/>
             </group>
-            <field name="template_content" widget="html"/>
           </group>
+          <notebook>
+            <page string="Editor">
+              <group>
+                <field name="template_content" widget="html" string="Template Content" help="Edit your template using RichText (Word-like Editor). You can edit the alignment,
+                font style, size, background/font color."/>
+              </group>
+            </page>
+            <page string="Editor (HTML)">
+              <group>
+                <field name="template_content"
+                 widget="html"
+                 string="Template Content - HTML"
+                 options="{'sandboxedPreview':true}"
+                 help="Edit your template using HTML. You can paste your copied HTML+CSS design
+                here. Click on the code-looking button on the right to switch views."/>
+              </group>
+            </page>
+            <page string="Preview">
+              <field name="template_content" readonly="1" widget="html"/>
+            </page>
+          </notebook>
+
         </sheet>
       </form>
     </field>
