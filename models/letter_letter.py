@@ -15,6 +15,8 @@ class LetterLetter(models.Model):
     linked_content=fields.Html(readonly=True, related='template_id.template_content')
     # company_id=fields.Many2one('res.company',string="Company")
 
+    def print_letter(self):
+        return self.env.ref('letter_writer.letter_html_report').report_action(self)
 
 
     # @api.onchange('template_id','company_id','letter_date','use')

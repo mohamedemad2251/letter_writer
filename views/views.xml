@@ -76,6 +76,11 @@
     <field name="model">letter.letter</field>
     <field name="arch" type="xml">
       <form>
+        <header style="display: flex; width: 100vw;">
+<!--        <header>-->
+          <button string="PRINT AS PDF" type="object" name="print_letter" />  <!-- It doesn't work unless it's an object (Python Method) or an action (Server Action record) -->
+<!--          <button string="SAVE"/>-->
+        </header>
         <sheet>
           <h1>
             <field name="letter_name"/>
