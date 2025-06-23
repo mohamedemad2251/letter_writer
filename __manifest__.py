@@ -34,6 +34,10 @@
         'views/menu_items.xml',
         'views/templates.xml',
     ],
+
+    'external_dependencies' : {
+        'python' : ['docx'],
+    }
     # only loaded in demonstration mode
     # 'demo': [
     #     'demo/demo.xml',
