@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="letter_html_report" model="ir.actions.report">  <!-- The report action used in the python method. -->
-        <field name="name">HTML Content</field>
+        <field name="name">Letter</field>
         <field name="model">letter.letter</field>
         <field name="report_name">letter_writer.letter_html_template</field>
         <field name="report_file">letter_writer.letter_html_template</field>
         <field name="binding_model_id" ref="model_letter_letter"/>
         <field name="binding_type">report</field>
         <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">object.letter_name</field>  <!-- We can use "object" to refer to the recordset we're working with. Like (self) -->
     </record>
 </odoo>
