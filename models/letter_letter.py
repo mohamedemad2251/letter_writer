@@ -1,5 +1,4 @@
 from dateutil.utils import today
-
 from odoo import api,fields,models
 
 class LetterLetter(models.Model):
@@ -17,6 +16,13 @@ class LetterLetter(models.Model):
 
     def print_letter(self):
         return self.env.ref('letter_writer.letter_html_report').report_action(self)
+
+    def save_letter_docx(self):
+        return {
+            'type' : 'ir.actions.act_url',      #Type: URL (To send the request to the HTTP Controller we created in the controllers
+            'url' : f'/letter/{self.id}/download_docx',     #URL endpoint. Will be heard by the controller
+            'target' : 'self'       #self = Same Window
+        }
 
 
     # @api.onchange('template_id','company_id','letter_date','use')
