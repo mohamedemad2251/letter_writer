@@ -24,7 +24,7 @@
 ## 📦 Dependencies
 
 - Odoo 18
-- Python package: `python-docx`
+- Python package: `html2docx` (and its dependencies)
 - Required module: `letter_base` (custom module)
 
 ---
