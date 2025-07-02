@@ -2,6 +2,8 @@ import markupsafe
 from dateutil.utils import today
 
 from odoo import api, fields, models
+from odoo.exceptions import UserError
+from odoo.tools.view_validation import validate
 
 
 class LetterTemplate(models.Model):
@@ -18,6 +20,12 @@ class LetterTemplate(models.Model):
         help="Select a placeholder that will be changed dynamically in your letter. Placeholders have special syntax to be detected"
               "later. Please don't change the syntax as it won't be replaced later on."
      )
+    template_code = fields.Char(string="Template Code", required=True)
+    next_number = fields.Integer(string="Next Allowed Number")
+
+    #Adds a layer of validation using the query UNIQUE. This checks if the table already has that template_code field value or not. If it does, it throws a validation error.
+    _sql_constraints = [('unique_template_code','UNIQUE(template_code)',"Template\'s code must be unique! (Hint: This code already exists)")]
+
 
     def _get_dynamic_placeholders_selection(self):
         # Create a fake letter record to access get_letter_placeholders
@@ -39,3 +47,18 @@ class LetterTemplate(models.Model):
                 record.template_content = record.template_content + string_added  #Concatenate the placeholder
                 record.template_placeholders=None           #Reset the dropdown to None (nothing shows up, like the selection took effect & vanished)
 
+    @api.onchange('template_code')
+    def _capitalize_template_code(self):
+        for record in self:
+            if record.template_code:
+
+                if not record.template_code.isalpha():
+                    record.template_code = None
+                    raise UserError("The template's code must be letters only (Max: 3 letters)")
+
+                if len(record.template_code) > 3:
+                    raise UserError("The template's code must be less than or equals 3 letters!")
+
+                record.template_code = record.template_code.upper()
+            else:
+                return

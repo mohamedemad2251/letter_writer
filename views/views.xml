@@ -6,8 +6,9 @@
     <field name="model">letter.template</field>
     <field name="arch" type="xml">
       <list>
-        <field name="template_name" width="75vw"/>
-        <field name="template_date"/>
+        <field name="template_name" width="40vw"/>
+        <field name="template_code" width="40vw"/>
+        <field name="template_date" width="20vw"/>
       </list>
     </field>
   </record>
@@ -24,9 +25,11 @@
           <group>
             <group>
               <field name="template_date"/>
+              <field name="template_code"/>
             </group>
             <group>
               <field name="template_placeholders" style="border-style: solid; border-width: 1px; border-radius: 5px;"/>
+              <field name="next_number"/>
             </group>
           </group>
           <notebook>
