@@ -26,9 +26,11 @@
             <group>
               <field name="template_date"/>
               <field name="template_code"/>
+              <field name="template_module"/>
             </group>
             <group>
-              <field name="template_placeholders" style="border-style: solid; border-width: 1px; border-radius: 5px;"/>
+<!--              <field name="template_placeholders" style="border-style: solid; border-width: 1px; border-radius: 5px;"/>-->
+              <field name="template_placeholders_id" domain="['|',('module','=',template_module),('module','=','base')]" style="border-style: solid; border-width: 1px; border-radius: 5px;"/>
               <field name="next_number"/>
             </group>
           </group>
@@ -96,6 +98,14 @@
             <group>
               <field name="template_id"/>
               <field name="user_id"/>
+            </group>
+          </group>
+          <group>
+            <group name="optional-fields-1">
+
+            </group>
+            <group name="optional-fields-2">
+
             </group>
           </group>
           <notebook>
