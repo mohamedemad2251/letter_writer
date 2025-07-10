@@ -38,8 +38,6 @@ class LetterTemplate(models.Model):
         selection = [
             ('base', 'No Module'),
         ]
-        if self._module_is_installed('letter_hr'):
-            selection.append(('hr','HR'))
         return selection
 
     @api.onchange('template_placeholders_id')
