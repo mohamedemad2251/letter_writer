@@ -6,8 +6,9 @@
     <field name="model">letter.template</field>
     <field name="arch" type="xml">
       <list>
-        <field name="template_name" width="40vw"/>
-        <field name="template_code" width="40vw"/>
+        <field name="template_name" width="30vw"/>
+        <field name="template_code" width="30vw"/>
+        <field name="template_module" width="20vw" widget="badge" decoration-danger="template_module == 'base'"/>
         <field name="template_date" width="20vw"/>
       </list>
     </field>
