@@ -19,6 +19,7 @@
     <field name="model">letter.template</field>
     <field name="arch" type="xml">
       <form>
+        <button type="object" name="compute_next_allowed_number" string="COMPUTE NEXT ALLOWED NUMBER"/>
         <sheet>
           <h1>
             <field name="template_name"/>
@@ -59,10 +60,30 @@
             <page string="Preview">
               <field name="template_content" readonly="1" widget="html"/>
             </page>
+            <page string="Linked Letters">
+              <field name="letter_ids">
+                <list>
+                  <field name="letter_name"/>
+                </list>
+              </field>
+            </page>
           </notebook>
 
         </sheet>
       </form>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="letter_template_search_view">
+    <field name="name">letter.template.search.view</field>
+    <field name="model">letter.template</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="template_name"/>
+        <field name="template_module"/>
+        <field name="template_code"/>
+        <filter name="module_groupby" context="{'group_by':'template_module'}"/>
+      </search>
     </field>
   </record>
 
@@ -73,6 +94,7 @@
       <list>
         <field name="letter_name"/>
         <field name="template_id"/>
+        <field name="template_module" widget="badge" decoration-danger="template_module == 'base'"/>
       </list>
     </field>
   </record>

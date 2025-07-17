@@ -1,5 +1,6 @@
 from dateutil.utils import today
 from odoo import api, fields, models
+from odoo.exceptions import UserError
 
 
 class LetterLetter(models.Model):
@@ -15,9 +16,11 @@ class LetterLetter(models.Model):
     linked_content = fields.Html(readonly=True, related='template_id.template_content')
 
     template_module = fields.Selection(related='template_id.template_module', store=False)  #Dummy related field to be able to use it in XPath correctly with invisible attr logic
+    letter_number = fields.Integer(string="Letter's Number")
 
     _sql_constraints = [
-        ('unique_letter_code', 'UNIQUE(letter_name)', 'Letter Name should be unique! (Hint: It already exists)')]
+        ('unique_letter_code', 'UNIQUE(letter_name)', "Letter Name should be unique! (Hint: It already exists, try changing the letter's year (date) "
+                                                      "or template's next number)")]
 
 
     def print_letter(self):
@@ -38,8 +41,23 @@ class LetterLetter(models.Model):
         for record in self:
             if record.template_id and record.letter_date:  #TO-DO: Add validation for record.template_id.next_number
                 record.letter_name = record.template_id.template_code + '/' + str(record.letter_date.year) + '/' + str(
-                    record.template_id.next_number)
-                record.template_id.next_number += 1
+                    record.template_id.next_number)     #NOTE: This complements with the SQL Constraint given above, the constraint makes sure this letter_name isn't
+                                                        # duplicated
+                count=0
+                while count < 10000:
+                    check_name = record.template_id.template_code + '/' + str(record.letter_date.year) + '/' + str(
+                        record.template_id.next_number)
+                    existing_record = self.env['letter.letter'].search_count([('letter_name','=',check_name)],1)
+                    if existing_record:
+                        record.template_id.next_number += 1
+                        if record.template_id.next_number > 9999:
+                            record.template_id.next_number = 0
+                        count += 1
+                    else:
+                        break
+                if count > 9999:
+                    raise UserError("Sorry, this template's number of letters exceeds 9999 which is the max. Please create a new template or duplicate this one")
+
             else:
                 record.letter_name = None
 

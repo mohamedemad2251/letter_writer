@@ -2,6 +2,7 @@ import markupsafe
 from dateutil.utils import today
 
 from odoo import api, fields, models
+from odoo.addons.test_convert.tests.test_env import record
 from odoo.exceptions import UserError
 
 
@@ -11,16 +12,26 @@ class LetterTemplate(models.Model):
     _rec_name = 'template_name'  #Your template name isn't called "name" so Odoo's ORM by default can't grab records/show their names. We need to represent records with a variable assigned.
 
     template_name = fields.Char(string="Template Name", required=True)
-    template_date = fields.Date(string="Template Date", default=today())
+    template_date = fields.Date(string="Template Date", default=today(),help="Template's creation date. This field has no effect for the letters but can be used for "
+                                                                             "filtering.")
     template_content = fields.Html(string="Template Content", sanitize=False, sanitize_tags=False,
                                    sanitize_attributes=False, required=True)
     template_module = fields.Selection(string="Template Module", required=True,
-                                       selection=lambda self: self._get_dynamic_modules_selection(), readonly=False)
+                                       selection=lambda self: self._get_dynamic_modules_selection(), readonly=False,
+                                       help="Choosing a module affects both the template's placeholder dropdown menu (extends it) and letter's shown fields to populate "
+                                            "such placeholders.")
 
     template_placeholders_id = fields.Many2one('letter.placeholders',string="Template Placeholders")
 
-    template_code = fields.Char(string="Template Code", required=True)
-    next_number = fields.Integer(string="Next Allowed Number")
+    template_code = fields.Char(string="Template Code", required=True, help="Code that will be used in the letters as part of the letter's name. Letter's Name: "
+                                                                            "Template Code/Letter's Year (in Date)/Next Allowed Number.")
+    next_number = fields.Integer(string="Next Allowed Number", readonly=False, help="A number/code that is a part of the letter's name code. Letter's Name: "
+                                                                                    "Template Code/Letter's Year (in Date)/Next Allowed Number. "
+                                                                                    "Use this field responsibly if you're populating it manually. Failing "
+                                                                                    "to do so can cause a letter to throw an error for already existing.")
+    # next_number = fields.Integer(string="Next Allowed Number", readonly=False, compute='_validate_next_number')
+
+    letter_ids = fields.One2many('letter.letter','template_id',string="Letters")
 
 
     #Adds a layer of validation using the query UNIQUE. This checks if the table already has that template_code field value or not. If it does, it throws a validation error.
@@ -69,3 +80,31 @@ class LetterTemplate(models.Model):
                 record.template_code = record.template_code.upper()
             else:
                 return
+
+    def compute_next_allowed_number(self):
+        year = int(fields.Date.today().year)     #Get the current year using today & year
+        for record in self:
+            used_next_numbers = set()       #Create an empty set for all used next_number values IN THIS YEAR
+            for letter in record.letter_ids:
+                if letter.letter_date:
+                    if int(letter.letter_name.split('/')[-2]) == year:
+                        used_next_numbers.add(int(letter.letter_name.split('/')[-1]))
+            for next_number in range(10000):
+                if next_number not in used_next_numbers:
+                    record.next_number = next_number
+                    return
+            raise UserError('This template already has 9999 letters (full). Please create a new template or enter the next number manually. (for older years)')
+
+    # @api.depends('next_number')
+    # def _validate_next_number(self):
+    #     for record in self:
+    #         if record.next_number > 9999:
+    #             raise UserError('The Next Allowed Number cannot be more than 9999!')
+            # for letter in record.letter_ids:
+            #     letter_next_number = int(letter.letter_name.replace((letter.template_id.template_code + '/' + str(letter.letter_date.year) + '/'),''))
+            #     while letter_next_number == record.next_number:
+            #         count=0
+            #
+            #         raise UserError('')
+
+            # raise UserError(str(record.letter_ids))
