@@ -2,7 +2,6 @@ import markupsafe
 from dateutil.utils import today
 
 from odoo import api, fields, models
-from odoo.addons.test_convert.tests.test_env import record
 from odoo.exceptions import UserError
 
 
