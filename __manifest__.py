@@ -37,7 +37,16 @@
 
     'external_dependencies' : {
         'python' : ['docx'],
-    }
+    },
+
+    'assets': {
+        'web.assets_backend': [
+            # 'letter_writer/static/src/js/placeholder_dropdown.js',
+            "letter_writer/static/src/wysiwyg/align_hook.js",
+            # 'letter_writer/static/src/wysiwyg/align_hook.js',
+        ],
+    },
+
     # only loaded in demonstration mode
     # 'demo': [
     #     'demo/demo.xml',
